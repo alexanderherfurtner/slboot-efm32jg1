@@ -1,0 +1,19 @@
+{
+	"configurations": [
+		{
+			"name": "bare",
+			"defines": [
+				"${config:project.target.device}",
+				"${config:project.toolchain.define}"
+			],
+			"includePath": [
+				"${workspaceFolder}/src/**",
+				"${workspaceFolder}/arch/**",
+				"${workspaceFolder}/libs/**",
+				"${workspaceFolder}/drivers/**"
+			],
+			"compilerPath": "${config:project.toolchain.path}/bin/arm-none-eabi-gcc"
+		}
+	],
+	"version": 4
+}

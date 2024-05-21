@@ -1,0 +1,9 @@
+*.d
+*.o
+/.zout/*
+/.eclipse/Debug/*
+/.eclipse/.settings/*
+/.eclipse/.gitignore
+/.packages/segger-rtt-lib/
+/.packages/silicon-labs-gecko-sdk/
+

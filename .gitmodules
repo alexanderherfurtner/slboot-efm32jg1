@@ -1,0 +1,8 @@
+[submodule ".packages/segger-rtt-lib"]
+	path = .packages/segger-rtt-lib
+	url = https://github.com/alexanderherfurtner/segger-rtt-lib.git
+	branch = segger-rtt-lib-v796h
+[submodule ".packages/silicon-labs-gecko-sdk"]
+	path = .packages/silicon-labs-gecko-sdk
+	url = https://github.com/alexanderherfurtner/gecko-sdk.git
+	branch = gecko-suite-v1.0.1_sdk-v5.1.3

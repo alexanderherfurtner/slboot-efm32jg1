@@ -1,0 +1,41 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug with Segger J-Link over USB",
+			"cwd": "${workspaceFolder}",
+			"type": "cortex-debug",
+			"request": "launch",
+			"executable": "${config:project.exe.elf}",
+			"servertype": "jlink",
+			"serverpath": "/opt/SEGGER/JLink/JLinkGDBServerCLExe",
+			/* Command line: -if swd -device EFM32JG1B200F128GM48 -endian little -speed 1000 -port 2331 -swoport 2332 -telnetport 2333 -vd -ir -localhostonly 1 -singlerun -strict -timeout 0 -nogui */
+			"serverArgs": [],
+			"showDevDebugOutput": "none",
+			"armToolchainPath": "${config:project.toolchain.path}/bin",
+			"device": "${config:project.debugger.device}",
+			"svdFile": "${workspaceFolder}/.packages/silicon-labs-gecko-sdk/platform/CMSIS/SVD/{$config:project.target.device}.svd",
+			"interface": "swd",
+			"rttConfig": {
+				"enabled": true,
+				"address": "auto",
+				"decoders": [
+					{
+						"label": "",
+						"port": 0,
+						"type": "console"
+					}
+				]
+			},
+			"runToEntryPoint": "main",
+			"preLaunchTask": "build",
+			"preLaunchCommands": [
+				"monitor reset",
+				"monitor halt"
+			],
+			"postRestartCommands": [
+				"monitor reset"
+			]
+		},
+	]
+}

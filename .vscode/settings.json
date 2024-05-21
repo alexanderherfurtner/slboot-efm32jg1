@@ -1,0 +1,50 @@
+{
+        "project": {
+                "name": "OSLabel Bootloader",
+                "description": "EFM32JG1 Bootloader",
+                "version": "1.0.0",
+                "author": "Alexander Herfurtner",
+                "license": "MIT",
+                "repository": "https://github.com/alexanderherfurtner/slboot-efm32jg1.git",
+                "keywords": ["EFM32JG", "Bootloader"],
+                "homepage": "www.osl.alexanderherfurtner.de",
+                "bugs": "None",
+                "exe": {
+                        "name": "slboot",
+                        "path": "${workspaceFolder}/.zout",
+                        "elf": "${workspaceFolder}/.zout/slboot.elf",
+                },
+                "target": {
+                        "arch": "armv7-m",
+                        "cpu": "cortex-m3",
+                        "device": "EFM32JG1B200F128GM48",
+                },
+                "toolchain": {
+                        "name": "GNU Arm Embedded Toolchain",
+                        "version": "10.3-2021.10",
+                        "homepage": "https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm",
+                        "license": "GPLv2",
+                        "path": "/opt/arm/gcc-arm-none-eabi/10.3-2021.10",
+                        "define": "__GNUC__"
+                },
+                "debugger": {
+                        "name": "J-Link",
+                        "version": "6.40",
+                        "homepage": "https://www.segger.com/products/debug-probes/j-link/",
+                        "license": "Proprietary",
+                        "path": "/opt/SEGGER/JLink",
+                        "interface": "swd",
+                        "speed": "4000",
+                        "device": "${config:project.target.device}",
+                },
+        },
+        "editor": {
+                "tabSize": 4,
+                "insertSpaces": false,
+                "detectIndentation": true,
+        },
+        "files.associations": {
+                "*.c": "c",
+                "*.h": "c"
+        },
+}
