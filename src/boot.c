@@ -16,6 +16,7 @@
 #include "dbgcfg.h"
 #include "bootcfg.h"
 
+#include "fatal.h"
 /******************************************************************************/
 typedef struct sys_info_s {
 	uint32_t reset_cause;
@@ -26,6 +27,40 @@ sys_info_t g_sys_info;
 /******************************************************************************/
 static void sys_init(sys_info_t* sys_info);
 static void sys_info(sys_info_t* sys_info);
+
+/******************************************************************************/
+void NMI_Handler			(void) { fatal_error_x(0x01); }
+void HardFault_Handler		(void) { fatal_error_x(0x02); }
+void MemManage_Handler		(void) { fatal_error_x(0x03); }
+void BusFault_Handler		(void) { fatal_error_x(0x04); }
+void UsageFault_Handler		(void) { fatal_error_x(0x05); }
+void SVC_Handler			(void) { fatal_error_x(0x06); }
+void DebugMon_Handler		(void) { fatal_error_x(0x07); }
+void PendSV_Handler			(void) { fatal_error_x(0x08); }
+void SysTick_Handler		(void) { fatal_error_x(0x09); }
+/*void EMU_IRQHandler		(void) { fatal_error_x(0x0a); }*/
+void WDOG0_IRQHandler		(void) { fatal_error_x(0x0b); }
+void LDMA_IRQHandler		(void) { fatal_error_x(0x0c); }
+void GPIO_EVEN_IRQHandler	(void) { fatal_error_x(0x0d); }
+void TIMER0_IRQHandler		(void) { fatal_error_x(0x0e); }
+void USART0_RX_IRQHandler	(void) { fatal_error_x(0x0f); }
+void USART0_TX_IRQHandler	(void) { fatal_error_x(0x10); }
+void ACMP0_IRQHandler		(void) { fatal_error_x(0x11); }
+void ADC0_IRQHandler		(void) { fatal_error_x(0x12); }
+void IDAC0_IRQHandler		(void) { fatal_error_x(0x13); }
+void I2C0_IRQHandler		(void) { fatal_error_x(0x14); }
+void GPIO_ODD_IRQHandler	(void) { fatal_error_x(0x15); }
+void TIMER1_IRQHandler		(void) { fatal_error_x(0x16); }
+void USART1_RX_IRQHandler	(void) { fatal_error_x(0x17); }
+void USART1_TX_IRQHandler	(void) { fatal_error_x(0x18); }
+void LEUART0_IRQHandler		(void) { fatal_error_x(0x19); }
+void PCNT0_IRQHandler		(void) { fatal_error_x(0x1a); }
+void CMU_IRQHandler			(void) { fatal_error_x(0x1b); }
+void MSC_IRQHandler			(void) { fatal_error_x(0x1c); }
+void CRYPTO_IRQHandler		(void) { fatal_error_x(0x1d); }
+void LETIMER0_IRQHandler	(void) { fatal_error_x(0x1e); }
+void RTCC_IRQHandler		(void) { fatal_error_x(0x1f); }
+void CRYOTIMER_IRQHandler	(void) { fatal_error_x(0x20); }
 
 /******************************************************************************/
 /**
@@ -118,6 +153,9 @@ static void sys_init(sys_info_t* sys_info) {
 
 	/* Segger RTT Init */
 	SEGGER_RTT_Init();
+
+	/* Enable global interrupts */
+	__enable_irq();
 }
 
 /**
