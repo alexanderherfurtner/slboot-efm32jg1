@@ -88,6 +88,7 @@ INC_DIRS := \
 
 C_SRC +=  \
 	src/boot.c \
+	src/fatal.c \
 	libs/emlib/src/em_cmu.c \
 	libs/emlib/src/em_rmu.c \
 	libs/emlib/src/em_emu.c \
