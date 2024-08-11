@@ -15,6 +15,18 @@
 #include "eminc.h"
 #include <SEGGER_RTT.h>
 
+/**
+ * @brief Check if debug probe is active
+ *
+ * Use Cortex-M specific register to determine if debug probe is active.
+ * This can be used to conditionally enable debug output.
+ *
+ * @return true if debug probe is active
+ */
+static inline bool dbg_probe_is_active(void) {
+	return (CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk);
+}
+
 #define DBG_PRINTF(fmt, ...)\
 	do {\
 		SEGGER_RTT_printf(0, fmt, ##__VA_ARGS__);\
