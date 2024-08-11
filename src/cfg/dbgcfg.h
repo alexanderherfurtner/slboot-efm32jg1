@@ -29,7 +29,8 @@ static inline bool dbg_probe_is_active(void) {
 
 #define DBG_PRINTF(fmt, ...)\
 	do {\
-		SEGGER_RTT_printf(0, fmt, ##__VA_ARGS__);\
+		if (dbg_probe_is_active())\
+			SEGGER_RTT_printf(0, fmt, ##__VA_ARGS__);\
 	} while (0)
 
 #define DBG_RSTCAUSE_PRINT(bitf, mask)\
