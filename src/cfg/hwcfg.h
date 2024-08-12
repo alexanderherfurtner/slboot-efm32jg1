@@ -34,6 +34,7 @@ static inline WDOG_Init_TypeDef const* hw_wdg_config(void) {
 		.perSel = wdogPeriod_129, /* 129 ms */
 		.warnSel = wdogWarnDisable,
 		.winSel = wdogIllegalWindowDisable,
+		.intSel = wdogIntTout, /* Enable Timeout Interrupt */
 		.resetDisable = true,
 	};
 

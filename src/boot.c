@@ -79,11 +79,15 @@ int main(void) {
 	GPIO_PinOutSet(BOOT_LED1_PORT, BOOT_LED1_PIN);
 	GPIO_PinOutClear(BOOT_LED2_PORT, BOOT_LED2_PIN);
 
+	loop = 1000000;
 	for (;;) {
-		loop = 1000000;
-		while(loop--);
-		GPIO_PinOutToggle(BOOT_LED1_PORT, BOOT_LED1_PIN);
-		GPIO_PinOutToggle(BOOT_LED2_PORT, BOOT_LED2_PIN);
+		WDOG_Feed();
+		loop--;
+		if (loop == 0) {
+			GPIO_PinOutToggle(BOOT_LED1_PORT, BOOT_LED1_PIN);
+			GPIO_PinOutToggle(BOOT_LED2_PORT, BOOT_LED2_PIN);
+			loop = 1000000;
+		}
 	}
 
 	return 0;
@@ -107,9 +111,6 @@ static void sys_init(sys_info_t* sys_info) {
 	sys_info->reset_cause = RMU_ResetCauseGet();
 	RMU_ResetCauseClear();
 	RMU_ResetControl(rmuResetLockUp, rmuResetModeFull);
-
-	/* Configure Watchdog */
-	WDOGn_Init(WDOG0, hw_wdg_config());
 
 	/* Configure EMU2/3/4 Power Management */
 	EMU_EM23Init(hw_emu_em23_config());
@@ -153,6 +154,10 @@ static void sys_init(sys_info_t* sys_info) {
 
 	/* Segger RTT Init */
 	SEGGER_RTT_Init();
+
+	/* Configure Watchdog */
+	WDOGn_Init(WDOG0, hw_wdg_config());
+	NVIC_EnableIRQ(WDOG0_IRQn);
 
 	/* Enable global interrupts */
 	CORE_CriticalEnableIrq();
