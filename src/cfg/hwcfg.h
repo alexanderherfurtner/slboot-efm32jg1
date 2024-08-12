@@ -196,6 +196,10 @@ static inline const hw_clk_peri_cfg_t* hw_clk_peri_config(void) {
 			.enable = true
 		},
 		{
+			.clk = cmuClock_HFLE, /* Low Energy peri clock (incl. WDOG) */
+			.enable = true
+		},
+		{
 			.clk = (CMU_Clock_TypeDef)-1
 		}
 	};
