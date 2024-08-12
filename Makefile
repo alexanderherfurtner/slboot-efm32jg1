@@ -92,6 +92,7 @@ C_SRC +=  \
 	libs/emlib/src/em_cmu.c \
 	libs/emlib/src/em_rmu.c \
 	libs/emlib/src/em_emu.c \
+	libs/emlib/src/em_core.c \
 	libs/emlib/src/em_gpio.c \
 	libs/emlib/src/em_wdog.c \
 	libs/emlib/src/em_system.c \

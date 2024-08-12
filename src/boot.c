@@ -155,7 +155,7 @@ static void sys_init(sys_info_t* sys_info) {
 	SEGGER_RTT_Init();
 
 	/* Enable global interrupts */
-	__enable_irq();
+	CORE_CriticalEnableIrq();
 }
 
 /**
