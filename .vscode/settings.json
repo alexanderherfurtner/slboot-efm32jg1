@@ -17,6 +17,7 @@
                 "target": {
                         "arch": "armv7-m",
                         "cpu": "cortex-m3",
+                        "family": "EFM32JG1B",
                         "device": "EFM32JG1B200F128GM48",
                 },
                 "toolchain": {

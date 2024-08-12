@@ -14,7 +14,7 @@
 			"showDevDebugOutput": "none",
 			"armToolchainPath": "${config:project.toolchain.path}/bin",
 			"device": "${config:project.debugger.device}",
-			"svdFile": "${workspaceFolder}/.packages/silicon-labs-gecko-sdk/platform/CMSIS/SVD/{$config:project.target.device}.svd",
+			"svdFile": "${workspaceFolder}/.packages/silicon-labs-gecko-sdk/platform/CMSIS/SVD/${config:project.target.family}/${config:project.target.device}.svd",
 			"interface": "swd",
 			"rttConfig": {
 				"enabled": true,
