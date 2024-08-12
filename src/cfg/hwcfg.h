@@ -30,8 +30,8 @@ static inline WDOG_Init_TypeDef const* hw_wdg_config(void) {
 		.em4Block = false,
 		.swoscBlock = false,
 		.lock = true, /* By default lock the config */
-		.clkSel = wdogClkSelULFRCO,
-		.perSel = wdogPeriod_256k,
+		.clkSel = wdogClkSelULFRCO, /* 1 kHz */
+		.perSel = wdogPeriod_129, /* 129 ms */
 		.warnSel = wdogWarnDisable,
 		.winSel = wdogIllegalWindowDisable,
 		.resetDisable = true,
