@@ -154,9 +154,9 @@ static void sys_init(sys_info_t* sys_info) {
 	}
 
 	/* Configure Pins */
-	for (hw_gpio_cfg_t const* hw_gpio_p = hw_gpio_config();
-		hw_gpio_p->port != (GPIO_Port_TypeDef)-1; hw_gpio_p++) {
-		GPIO_PinModeSet(hw_gpio_p->port, hw_gpio_p->pin, hw_gpio_p->mode, hw_gpio_p->out);
+	for (hw_gpio_pin_cfg_t const* hw_gpio_pin_p = hw_gpio_pin_config();
+		hw_gpio_pin_p->port != (GPIO_Port_TypeDef)-1; hw_gpio_pin_p++) {
+		GPIO_PinModeSet(hw_gpio_pin_p->port, hw_gpio_pin_p->pin, hw_gpio_pin_p->mode, hw_gpio_pin_p->out);
 	}
 
 	/* Erratum: EMU_E210/216 */

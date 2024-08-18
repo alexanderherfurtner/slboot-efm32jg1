@@ -289,15 +289,15 @@ static inline const hw_gpio_port_cfg_t* hw_gpio_port_config(void) {
 	return config;
 }
 
-typedef struct hw_gpio_cfg_s {
+typedef struct hw_gpio_pin_cfg_s {
 	GPIO_Port_TypeDef port;
 	uint8_t pin;
 	GPIO_Mode_TypeDef mode;
 	uint8_t out;
-} hw_gpio_cfg_t;
+} hw_gpio_pin_cfg_t;
 
-static inline const hw_gpio_cfg_t* hw_gpio_config(void) {
-	static const hw_gpio_cfg_t config[] =
+static inline const hw_gpio_pin_cfg_t* hw_gpio_pin_config(void) {
+	static const hw_gpio_pin_cfg_t config[] =
 	{
 #if defined(BOOT_LED1_PORT)
 		{
