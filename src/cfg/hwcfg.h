@@ -471,20 +471,89 @@ static inline const hw_gpio_pin_cfg_t* hw_gpio_pin_config(void) {
 			.mode = gpioModeDisabled,
 			.out = 0,
 		},
-#if defined(BOOT_LED1_PORT)
+		/* Port F */
+		{ /* SWCLK */
+			.port = gpioPortF,
+			.pin = 0,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{ /* SWDIO */
+			.port = gpioPortF,
+			.pin = 1,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{ /* SWO */
+			.port = gpioPortF,
+			.pin = 2,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
 		{
-			.port = BOOT_LED1_PORT,
-			.pin = BOOT_LED1_PIN,
+			.port = gpioPortF,
+			.pin = 3,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+#if defined(BOOT_CONFIG_LED1)
+		{
+			.port = gpioPortF,
+			.pin = 4,
 			.mode = gpioModePushPull,
-			.out = 0
+			.out = 0,
+		},
+#else
+		{
+			.port = gpioPortF,
+			.pin = 4,
+			.mode = gpioModeDisabled,
+			.out = 0,
 		},
 #endif
-#if defined(BOOT_LED2_PORT)
+#if defined(BOOT_CONFIG_LED2)
 		{
-			.port = BOOT_LED2_PORT,
-			.pin = BOOT_LED2_PIN,
+			.port = gpioPortF,
+			.pin = 5,
 			.mode = gpioModePushPull,
-			.out = 0
+			.out = 0,
+		},
+#else
+		{
+			.port = gpioPortF,
+			.pin = 5,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+#endif
+#if defined(BOOT_CONFIG_MEAS1)
+		{
+			.port = gpioPortF,
+			.pin = 6,
+			.mode = gpioModePushPull,
+			.out = 0,
+		},
+#else
+		{
+			.port = gpioPortF,
+			.pin = 6,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+#endif
+#if defined(BOOT_CONFIG_MEAS2)
+		{
+			.port = gpioPortF,
+			.pin = 7,
+			.mode = gpioModePushPull,
+			.out = 0,
+		},
+#else
+		{
+			.port = gpioPortF,
+			.pin = 7,
+			.mode = gpioModeDisabled,
+			.out = 0,
 		},
 #endif
 		{
