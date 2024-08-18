@@ -247,7 +247,7 @@ static inline const hw_gpio_port_cfg_t* hw_gpio_port_config(void) {
 			.slewrate = GPIO_Slewrate(GPIO_SlewrateDefault),
 			.slewrateAlt = GPIO_SlewrateAlt(GPIO_SlewrateDefault),
 			.dindis = false,
-			.dindisAlt = false,
+			.dindisAlt = true,
 		},
 		{
 			.port = gpioPortB,
@@ -299,6 +299,58 @@ typedef struct hw_gpio_pin_cfg_s {
 static inline const hw_gpio_pin_cfg_t* hw_gpio_pin_config(void) {
 	static const hw_gpio_pin_cfg_t config[] =
 	{
+		/* Port A */
+		{
+			.port = gpioPortA,
+			.pin = 0,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortA,
+			.pin = 1,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+#if defined(BOOT_CONFIG_DBG_UART)
+		{ /* Debug UART TX */
+			.port = gpioPortA,
+			.pin = 2,
+			.mode = gpioModePushPullAlt,
+			.out = 0,
+		},
+		{ /* Debug UART RX */
+			.port = gpioPortA,
+			.pin = 3,
+			.mode = gpioModeInputPull,
+			.out = 1, /* Pull-up */
+		},
+#else
+		{
+			.port = gpioPortA,
+			.pin = 2,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortA,
+			.pin = 3,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+#endif
+		{
+			.port = gpioPortA,
+			.pin = 4,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortA,
+			.pin = 5,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
 #if defined(BOOT_LED1_PORT)
 		{
 			.port = BOOT_LED1_PORT,
