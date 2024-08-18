@@ -351,6 +351,46 @@ static inline const hw_gpio_pin_cfg_t* hw_gpio_pin_config(void) {
 			.mode = gpioModeDisabled,
 			.out = 0,
 		},
+		/* Port B */
+#if defined(BOOT_CONFIG_BTN1)
+		{
+			.port = gpioPortB,
+			.pin = 11,
+			.mode = INPUTPULLFILTER,
+			.out = 1, /* Pull-Up */
+		},
+#else
+		{
+			.port = gpioPortB,
+			.pin = 11,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+#endif
+		{
+			.port = gpioPortB,
+			.pin = 12,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortB,
+			.pin = 13,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{ /* LFXTAL_N */
+			.port = gpioPortB,
+			.pin = 14,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{ /* LFXTAL_P */
+			.port = gpioPortB,
+			.pin = 15,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
 #if defined(BOOT_LED1_PORT)
 		{
 			.port = BOOT_LED1_PORT,
