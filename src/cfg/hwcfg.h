@@ -391,6 +391,43 @@ static inline const hw_gpio_pin_cfg_t* hw_gpio_pin_config(void) {
 			.mode = gpioModeDisabled,
 			.out = 0,
 		},
+		/* Port C */
+		{
+			.port = gpioPortC,
+			.pin = 6,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortC,
+			.pin = 7,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortC,
+			.pin = 8,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortC,
+			.pin = 9,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortC,
+			.pin = 10,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
+		{
+			.port = gpioPortC,
+			.pin = 11,
+			.mode = gpioModeDisabled,
+			.out = 0,
+		},
 #if defined(BOOT_LED1_PORT)
 		{
 			.port = BOOT_LED1_PORT,
