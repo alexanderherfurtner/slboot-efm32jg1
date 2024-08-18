@@ -143,7 +143,17 @@ static void sys_init(sys_info_t* sys_info) {
 		CMU_ClockEnable(hw_clk_peri_p->clk, hw_clk_peri_p->enable);
 	}
 
-	/* Configure GPIOs */
+	/* Configure Ports */
+	for (hw_gpio_port_cfg_t const* hw_gpio_port_p = hw_gpio_port_config();
+		hw_gpio_port_p->port != (GPIO_Port_TypeDef)-1; hw_gpio_port_p++) {
+		GPIO_DriveStrengthSet(hw_gpio_port_p->port, hw_gpio_port_p->driveStrength);
+		GPIO_SlewrateSet(hw_gpio_port_p->port,
+			hw_gpio_port_p->slewrate, hw_gpio_port_p->slewrateAlt);
+		GPIO_DinDisableSet(hw_gpio_port_p->port,
+			hw_gpio_port_p->dindis, hw_gpio_port_p->dindisAlt);
+	}
+
+	/* Configure Pins */
 	for (hw_gpio_cfg_t const* hw_gpio_p = hw_gpio_config();
 		hw_gpio_p->port != (GPIO_Port_TypeDef)-1; hw_gpio_p++) {
 		GPIO_PinModeSet(hw_gpio_p->port, hw_gpio_p->pin, hw_gpio_p->mode, hw_gpio_p->out);

@@ -208,6 +208,87 @@ static inline const hw_clk_peri_cfg_t* hw_clk_peri_config(void) {
 	return config;
 }
 
+typedef struct hw_gpio_port_cfg_s {
+	GPIO_Port_TypeDef port;
+	uint32_t driveStrength;
+	uint32_t slewrate;
+	uint32_t slewrateAlt;
+	bool dindis;
+	bool dindisAlt;
+} hw_gpio_port_cfg_t;
+
+/**
+ * Hardware GPIO port configuration.
+ *
+ * The chip supports up to two configuraton for each port. The default
+ * is used for the normal operation and the alternate for the alternate
+ * function.
+ *
+ * The following are configured:
+ * - Drive strength (including alternate)
+ * - Slewrate
+ * - SlewrateAlt
+ * - Dindis
+ * - DindisAlt
+ *
+ * The pin configuration can select the port configuration (normal or
+ * alternate) accordingly.
+ *
+ * The configuration is done for all ports.
+ *
+ * @return Pointer to the configuration array.
+ */
+static inline const hw_gpio_port_cfg_t* hw_gpio_port_config(void) {
+	static const hw_gpio_port_cfg_t config [] =
+	{
+		{
+			.port = gpioPortA,
+			.driveStrength = gpioDriveStrengthStrongAlternateStrong,
+			.slewrate = GPIO_Slewrate(GPIO_SlewrateDefault),
+			.slewrateAlt = GPIO_SlewrateAlt(GPIO_SlewrateDefault),
+			.dindis = false,
+			.dindisAlt = false,
+		},
+		{
+			.port = gpioPortB,
+			.driveStrength = gpioDriveStrengthStrongAlternateStrong,
+			.slewrate = GPIO_Slewrate(GPIO_SlewrateDefault),
+			.slewrateAlt = GPIO_SlewrateAlt(GPIO_SlewrateDefault),
+			.dindis = false,
+			.dindisAlt = false,
+		},
+		{
+			.port = gpioPortC,
+			.driveStrength = gpioDriveStrengthStrongAlternateStrong,
+			.slewrate = GPIO_Slewrate(GPIO_SlewrateDefault),
+			.slewrateAlt = GPIO_SlewrateAlt(GPIO_SlewrateDefault),
+			.dindis = false,
+			.dindisAlt = false,
+		},
+		{
+			.port = gpioPortD,
+			.driveStrength = gpioDriveStrengthStrongAlternateStrong,
+			.slewrate = GPIO_Slewrate(GPIO_SlewrateDefault),
+			.slewrateAlt = GPIO_SlewrateAlt(GPIO_SlewrateDefault),
+			.dindis = false,
+			.dindisAlt = false,
+		},
+		{
+			.port = gpioPortF,
+			.driveStrength = gpioDriveStrengthStrongAlternateStrong,
+			.slewrate = GPIO_Slewrate(GPIO_SlewrateDefault),
+			.slewrateAlt = GPIO_SlewrateAlt(GPIO_SlewrateDefault),
+			.dindis = false,
+			.dindisAlt = false,
+		},
+		{
+			.port = (GPIO_Port_TypeDef)-1
+		}
+	};
+
+	return config;
+}
+
 typedef struct hw_gpio_cfg_s {
 	GPIO_Port_TypeDef port;
 	uint8_t pin;
