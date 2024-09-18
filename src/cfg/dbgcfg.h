@@ -27,22 +27,45 @@ static inline bool dbg_probe_is_active(void) {
 	return (CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk);
 }
 
-#define DBG_PRINTF(fmt, ...)\
-	do {\
-		if (dbg_probe_is_active())\
-			SEGGER_RTT_printf(0, fmt, ##__VA_ARGS__);\
-	} while (0)
+/**
+ * @brief Print formatted string to debug output
+ *
+ * Print formatted string to debug output if debug probe is active.
+ *
+ * @param fmt format string
+ * @param ... arguments
+ */
+static inline void dbg_printf(const char* fmt, ...) {
+	va_list args;
+	if (dbg_probe_is_active()){
+		va_start(args, fmt);
+		SEGGER_RTT_printf(0, fmt, args);
+		va_end(args);
+	}
+}
+
+/**
+ * @brief Print string to debug output
+ *
+ * Print string to debug output if debug probe is active.
+ *
+ * @param str string
+ */
+static inline void dbg_print(const char* str) {
+	if (dbg_probe_is_active())
+		SEGGER_RTT_WriteString(0, str);
+}
 
 #define DBG_RSTCAUSE_PRINT(bitf, mask)\
 	do {\
 		if((bitf)&(mask)) {\
-			DBG_PRINTF(" %s", #mask);\
+			dbg_printf(" %s", #mask);\
 		}\
 	} while(0)
 
 static inline void dbg_print_reset_cause(uint32_t bitf) {
 	if (bitf) {
-		DBG_PRINTF("Reset:");
+		dbg_print("Reset:\n");
 		DBG_RSTCAUSE_PRINT(bitf, RMU_RSTCAUSE_PORST);
 		DBG_RSTCAUSE_PRINT(bitf, RMU_RSTCAUSE_AVDDBOD);
 		DBG_RSTCAUSE_PRINT(bitf, RMU_RSTCAUSE_DVDDBOD);
@@ -52,7 +75,7 @@ static inline void dbg_print_reset_cause(uint32_t bitf) {
 		DBG_RSTCAUSE_PRINT(bitf, RMU_RSTCAUSE_SYSREQRST);
 		DBG_RSTCAUSE_PRINT(bitf, RMU_RSTCAUSE_WDOGRST);
 		DBG_RSTCAUSE_PRINT(bitf, RMU_RSTCAUSE_EM4RST);
-		DBG_PRINTF("\n");
+		dbg_print("\n");
 	}
 }
 
