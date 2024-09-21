@@ -41,6 +41,7 @@
         },
         "editor": {
                 "tabSize": 4,
+                "rulers": [80],
                 "insertSpaces": false,
                 "detectIndentation": true,
         },
