@@ -59,15 +59,15 @@ void __attribute__((optimize("O0"))) fatal_error_trap(void *irq_stackf, uint32_t
 
 	dbg_printf("Fatal Error Trap\n");
 	dbg_printf("Hdl:  %ld\n", hdl_nr);
-	dbg_printf("Sp:   %p\n", stackf_p);
-	dbg_printf("r0:   %08lx\n", stackf_p->r0);
-	dbg_printf("r1:   %08lx\n", stackf_p->r1);
-	dbg_printf("r2:   %08lx\n", stackf_p->r2);
-	dbg_printf("r3:   %08lx\n", stackf_p->r3);
-	dbg_printf("r12:  %08lx\n", stackf_p->r12);
-	dbg_printf("lr:   %08lx\n", stackf_p->lr);
-	dbg_printf("pc:   %08lx\n", stackf_p->pc);
-	dbg_printf("xpsr: %08lx\n", stackf_p->xpsr);
+	dbg_printf("Sp:   0x%p\n", stackf_p);
+	dbg_printf("r0:   0x%08lx\n", stackf_p->r0);
+	dbg_printf("r1:   0x%08lx\n", stackf_p->r1);
+	dbg_printf("r2:   0x%08lx\n", stackf_p->r2);
+	dbg_printf("r3:   0x%08lx\n", stackf_p->r3);
+	dbg_printf("r12:  0x%08lx\n", stackf_p->r12);
+	dbg_printf("lr:   0x%08lx\n", stackf_p->lr);
+	dbg_printf("pc:   0x%08lx\n", stackf_p->pc);
+	dbg_printf("xpsr: 0x%08lx\n", stackf_p->xpsr);
 
 	/* end of the road */
 	fatal_error_dead();
@@ -103,7 +103,8 @@ static void fatal_error_dead(void) {
 	/* Indicate Fatal error */
 	GPIO_PinOutSet(BOOT_LED1_PORT, BOOT_LED1_PIN);
 	GPIO_PinOutSet(BOOT_LED2_PORT, BOOT_LED2_PIN);
-
+	/* Free GPIO from routings */
+	TIMER1->ROUTEPEN &= ~TIMER_ROUTEPEN_CC0PEN;
 	for(;;) {
 		uint32_t delay = 1000000UL;
 		/* Toggle all LEDs to indicate the fatal error */
