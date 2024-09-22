@@ -40,6 +40,8 @@
 #include "em_wdog.h"    /* watchdog */
 #include "em_prs.h"     /* peripheral reflex system */
 #include "em_gpio.h"    /* general purpose input output unit */
+#include "em_ldma.h"    /* direct memory access unit */
+#include "em_timer.h"   /* timer unit */
 
 #endif /* EMINC_H */
 
