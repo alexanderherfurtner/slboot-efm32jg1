@@ -73,7 +73,7 @@ void __attribute__((optimize("O0"))) fatal_error_trap(void *irq_stackf, uint32_t
 	fatal_error_dead();
 }
 
-#if defined(DEBUG_EFM) && defined(DEBUG_EFM_USER)
+#if defined(DEBUG_EFM_USER)
 /**
  * @brief EFM/EM library assert overwrite
  *

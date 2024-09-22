@@ -55,16 +55,16 @@ DEPFLAGS = -MMD -MP -MF$(@:.o=.d) -MT$(@)
 override ARFLAGS = \
 	-D__STACK_SIZE=0x400 -Wstack-usage=1024 -fstack-usage \
 	-x assembler-with-cpp -Wall -Wextra -mcpu=cortex-m3 \
-	-mthumb -DDEBUG_EFM -D$(DEVICE) $(DEPFLAGS)
+	-mthumb -DDEBUG_EFM_USER -D$(DEVICE) $(DEPFLAGS)
 
 override CFLAGS = \
 	-Wall -Wextra -mcpu=cortex-m3 -mthumb \
 	-mfix-cortex-m3-ldrd -ffunction-sections \
-	-fdata-sections -fomit-frame-pointer -std=c99 -DDEBUG_EFM  \
+	-fdata-sections -fomit-frame-pointer -std=c99 \
 	-fsigned-char -fmessage-length=0 \
 	-Wstack-usage=1024 -fstack-usage \
 	-Wa,-ahld=$(OBJ_DIR)/$(@F:.o=.lst) \
-	-D$(DEVICE) $(DEPFLAGS)
+	-DDEBUG_EFM_USER -D$(DEVICE) $(DEPFLAGS)
 
 override LDFLAGS = \
 	-Xlinker -Map=$(EXE_DIR)/$(PROJ).map -mcpu=cortex-m3 \
