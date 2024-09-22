@@ -39,13 +39,13 @@ void fatal_error(const char* file, uint32_t line, uint32_t info0, uint32_t info1
 	/* Disable all interrupts */
 	__disable_irq();
 
-	DBG_PRINTF("Fatal Error\n");
-	DBG_PRINTF("File:  %s\n", file);
-	DBG_PRINTF("Line:  %ld\n", line);
-	DBG_PRINTF("Info0: %08lx\n", info0);
-	DBG_PRINTF("Info1: %08lx\n", info1);
-	DBG_PRINTF("Info2: %08lx\n", info2);
-	DBG_PRINTF("Info3: %08lx\n", info3);
+	dbg_printf("Fatal Error\n");
+	dbg_printf("File:  %s\n", file);
+	dbg_printf("Line:  %ld\n", line);
+	dbg_printf("Info0: %08lx\n", info0);
+	dbg_printf("Info1: %08lx\n", info1);
+	dbg_printf("Info2: %08lx\n", info2);
+	dbg_printf("Info3: %08lx\n", info3);
 
 	/* end of the road */
 	fatal_error_dead();
@@ -57,17 +57,17 @@ void __attribute__((optimize("O0"))) fatal_error_trap(void *irq_stackf, uint32_t
 	/* Disable all interrupts */
 	__disable_irq();
 
-	DBG_PRINTF("Fatal Error Trap\n");
-	DBG_PRINTF("Hdl:  %ld\n", hdl_nr);
-	DBG_PRINTF("Sp:   %p\n", stackf_p);
-	DBG_PRINTF("r0:   %08lx\n", stackf_p->r0);
-	DBG_PRINTF("r1:   %08lx\n", stackf_p->r1);
-	DBG_PRINTF("r2:   %08lx\n", stackf_p->r2);
-	DBG_PRINTF("r3:   %08lx\n", stackf_p->r3);
-	DBG_PRINTF("r12:  %08lx\n", stackf_p->r12);
-	DBG_PRINTF("lr:   %08lx\n", stackf_p->lr);
-	DBG_PRINTF("pc:   %08lx\n", stackf_p->pc);
-	DBG_PRINTF("xpsr: %08lx\n", stackf_p->xpsr);
+	dbg_printf("Fatal Error Trap\n");
+	dbg_printf("Hdl:  %ld\n", hdl_nr);
+	dbg_printf("Sp:   %p\n", stackf_p);
+	dbg_printf("r0:   %08lx\n", stackf_p->r0);
+	dbg_printf("r1:   %08lx\n", stackf_p->r1);
+	dbg_printf("r2:   %08lx\n", stackf_p->r2);
+	dbg_printf("r3:   %08lx\n", stackf_p->r3);
+	dbg_printf("r12:  %08lx\n", stackf_p->r12);
+	dbg_printf("lr:   %08lx\n", stackf_p->lr);
+	dbg_printf("pc:   %08lx\n", stackf_p->pc);
+	dbg_printf("xpsr: %08lx\n", stackf_p->xpsr);
 
 	/* end of the road */
 	fatal_error_dead();
