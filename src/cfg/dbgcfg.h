@@ -39,7 +39,7 @@ static inline void dbg_printf(const char* fmt, ...) {
 	va_list args;
 	if (dbg_probe_is_active()){
 		va_start(args, fmt);
-		SEGGER_RTT_printf(0, fmt, args);
+		SEGGER_RTT_vprintf(0, fmt, &args);
 		va_end(args);
 	}
 }
