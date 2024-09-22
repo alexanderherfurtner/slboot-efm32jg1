@@ -19,6 +19,10 @@
                         "cpu": "cortex-m3",
                         "family": "EFM32JG1B",
                         "device": "EFM32JG1B200F128GM48",
+                        "package": "QFN48",
+                        "flash": "128KB",
+                        "ram": "32KB",
+                        "gpio": "32",
                 },
                 "toolchain": {
                         "name": "GNU Arm Embedded Toolchain",
