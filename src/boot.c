@@ -15,7 +15,9 @@
 #include "hwcfg.h"
 #include "dbgcfg.h"
 #include "bootcfg.h"
+#include "bledcfg.h"
 
+#include "bled.h"
 #include "fatal.h"
 /******************************************************************************/
 typedef struct sys_info_s {
@@ -61,6 +63,16 @@ void CRYPTO_IRQHandler		(void) { fatal_error_x(0x1d); }
 void LETIMER0_IRQHandler	(void) { fatal_error_x(0x1e); }
 void RTCC_IRQHandler		(void) { fatal_error_x(0x1f); }
 void CRYOTIMER_IRQHandler	(void) { fatal_error_x(0x20); }
+/******************************************************************************/
+/**
+ * @brief Board LED initialization parameter.
+ */
+static const bled_init_param_t bled_init_param = {
+	.hwled = (bled_hwled_t[]) {
+        { .port = BOOT_LED1_PORT, .pin = BOOT_LED1_PIN },
+        { .port = BOOT_LED2_PORT, .pin = BOOT_LED2_PIN },
+    }
+};
 
 /******************************************************************************/
 /**
@@ -76,16 +88,14 @@ int main(void) {
 	sys_init(&g_sys_info);
 	sys_info(&g_sys_info);
 
-	GPIO_PinOutSet(BOOT_LED1_PORT, BOOT_LED1_PIN);
-	GPIO_PinOutClear(BOOT_LED2_PORT, BOOT_LED2_PIN);
+	bled_init(&bled_init_param);
 
 	loop = 1000000;
 	for (;;) {
 		WDOG_Feed();
 		loop--;
 		if (loop == 0) {
-			GPIO_PinOutToggle(BOOT_LED1_PORT, BOOT_LED1_PIN);
-			GPIO_PinOutToggle(BOOT_LED2_PORT, BOOT_LED2_PIN);
+			bled_ctrl(BLED_LED_BOOT, BLED_CMD_TOGGLE, NULL);
 			loop = 1000000;
 		}
 	}
