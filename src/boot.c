@@ -40,7 +40,7 @@ void SVC_Handler			(void) { fatal_error_x(0x06); }
 void DebugMon_Handler		(void) { fatal_error_x(0x07); }
 void PendSV_Handler			(void) { fatal_error_x(0x08); }
 void SysTick_Handler		(void) { fatal_error_x(0x09); }
-/*void EMU_IRQHandler		(void) { fatal_error_x(0x0a); }*/
+void EMU_IRQHandler			(void) { fatal_error_x(0x0a); }
 void WDOG0_IRQHandler		(void) { fatal_error_x(0x0b); }
 void LDMA_IRQHandler		(void) { fatal_error_x(0x0c); }
 void GPIO_EVEN_IRQHandler	(void) { fatal_error_x(0x0d); }
@@ -168,9 +168,6 @@ static void sys_init(sys_info_t* sys_info) {
 		hw_gpio_pin_p->port != (GPIO_Port_TypeDef)-1; hw_gpio_pin_p++) {
 		GPIO_PinModeSet(hw_gpio_pin_p->port, hw_gpio_pin_p->pin, hw_gpio_pin_p->mode, hw_gpio_pin_p->out);
 	}
-
-	/* Erratum: EMU_E210/216 */
-	TEMPDRV_Init();
 
 	/* Segger RTT Init */
 	SEGGER_RTT_Init();

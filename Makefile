@@ -100,7 +100,6 @@ C_SRC +=  \
 	libs/emlib/src/em_assert.c \
 	libs/emlib/src/em_ldma.c \
 	libs/emlib/src/em_timer.c \
-	drivers/emdrv/tempdrv/src/tempdrv.c \
 	drivers/segger-rtt/SEGGER_RTT.c \
 	drivers/segger-rtt/SEGGER_RTT_printf.c \
 	arch/efm32jg1b/Source/system_efm32jg1b.c
