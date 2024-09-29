@@ -29,9 +29,22 @@ typedef enum bled_cmd_e {
  * @brief Board LED hardware configuration
  */
 typedef struct bled_hwled_s {
-	int8_t port;
-	int8_t pin;
+	int8_t gpio_port;
+	int8_t gpio_pin;
+	void *tmr_base;
+	uint8_t tmr_route;
+	uint8_t tmr_ch;
+	void *ldma_base;
+	uint8_t ldma_ch;
 } bled_hwled_t;
+
+/**
+ * @brief Board LED flash command arguments
+ */
+typedef struct bled_flash_cmd_arg_s {
+	uint32_t delay_ms;
+	uint32_t flash_ms;
+} bled_flash_cmd_arg_t;
 
 /**
  * @brief Board LED initialization parameter
