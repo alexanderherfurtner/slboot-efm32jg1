@@ -338,8 +338,7 @@ static int bled_hw_ctrl_cmd_flash(bled_led_t bled, bled_flash_cmd_arg_t* cmd_arg
 
 	/* Init LDMA transfer */
 	bled_p->hw_ldma.xfer_cfg = (LDMA_TransferCfg_t)
-		LDMA_TRANSFER_CFG_PERIPHERAL(LDMA_CH_REQSEL_SIGSEL_TIMER0CC0
-			<< bled_p->hw_tmr.ch | ldma_ch_srcsel_tmr);
+		LDMA_TRANSFER_CFG_PERIPHERAL(ldma_ch_srcsel_tmr | (bled_p->hw_tmr.ch + 1));
 
 	LDMA_StartTransfer(bled_p->hw_ldma.ch, &bled_p->hw_ldma.xfer_cfg,
 		&bled_p->hw_ldma.desc[0]);
