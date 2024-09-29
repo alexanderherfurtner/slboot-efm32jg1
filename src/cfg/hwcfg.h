@@ -201,6 +201,10 @@ static inline const hw_clk_peri_cfg_t* hw_clk_peri_config(void) {
 			.enable = true
 		},
 		{
+			.clk = cmuClock_TIMER1,
+			.enable = true
+		},
+		{
 			.clk = (CMU_Clock_TypeDef)-1
 		}
 	};
@@ -558,6 +562,60 @@ static inline const hw_gpio_pin_cfg_t* hw_gpio_pin_config(void) {
 #endif
 		{
 			.port = (GPIO_Port_TypeDef)-1
+		}
+	};
+
+	return config;
+}
+
+typedef struct hw_ldma_cfg_s {
+	LDMA_TypeDef * ldma;
+	LDMA_Init_t init;
+} hw_ldma_cfg_t;
+
+static inline const hw_ldma_cfg_t* hw_ldma_config(void) {
+	static const hw_ldma_cfg_t config[] =
+	{
+		{
+			.ldma = LDMA,
+			.init = LDMA_INIT_DEFAULT
+		},
+		{
+			.ldma = (LDMA_TypeDef*)-1
+		}
+	};
+
+	return config;
+}
+
+typedef struct hw_tmr_cfg_s {
+	TIMER_TypeDef * timer;
+	TIMER_Init_TypeDef init;
+} hw_tmr_cfg_t;
+
+static inline const hw_tmr_cfg_t* hw_tmr_config(void) {
+	static const hw_tmr_cfg_t config[] =
+	{
+		{
+			.timer = TIMER1,
+			.init = {
+				.enable = true,
+				.debugRun = false,
+				.prescale = timerPrescale1024,
+				.clkSel = timerClkSelHFPerClk,
+				.count2x = false,
+				.ati = false,
+				.fallAction = timerInputActionNone,
+				.riseAction = timerInputActionNone,
+				.mode = timerModeUp,
+				.dmaClrAct = true, /* Extinguish LDMA request on each event */
+				.quadModeX4 = false,
+				.oneShot = false,
+				.sync = false
+			}
+		},
+		{
+			.timer = (TIMER_TypeDef*)-1
 		}
 	};
 

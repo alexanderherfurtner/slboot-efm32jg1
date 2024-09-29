@@ -169,6 +169,18 @@ static void sys_init(sys_info_t* sys_info) {
 		GPIO_PinModeSet(hw_gpio_pin_p->port, hw_gpio_pin_p->pin, hw_gpio_pin_p->mode, hw_gpio_pin_p->out);
 	}
 
+	/* Configure LDMA */
+	for (hw_ldma_cfg_t const* hw_ldma_p = hw_ldma_config();
+		hw_ldma_p->ldma != (LDMA_TypeDef*)-1; hw_ldma_p++) {
+		LDMA_Init(&hw_ldma_p->init);
+	}
+
+	/* Configure timers */
+	for (hw_tmr_cfg_t const* hw_tmr_p = hw_tmr_config();
+		hw_tmr_p->timer != (TIMER_TypeDef*)-1; hw_tmr_p++) {
+		TIMER_Init(hw_tmr_p->timer, &hw_tmr_p->init);
+	}
+
 	/* Segger RTT Init */
 	SEGGER_RTT_Init();
 
