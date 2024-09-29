@@ -104,7 +104,8 @@ static void fatal_error_dead(void) {
 	GPIO_PinOutSet(BOOT_LED1_PORT, BOOT_LED1_PIN);
 	GPIO_PinOutSet(BOOT_LED2_PORT, BOOT_LED2_PIN);
 	/* Free GPIO from routings */
-	TIMER1->ROUTEPEN &= ~TIMER_ROUTEPEN_CC0PEN;
+	TIMER0->ROUTEPEN = 0;
+	TIMER1->ROUTEPEN = 0;
 	for(;;) {
 		uint32_t delay = 1000000UL;
 		/* Toggle all LEDs to indicate the fatal error */
