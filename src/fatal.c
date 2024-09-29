@@ -39,7 +39,7 @@ void fatal_error(const char* file, uint32_t line, uint32_t info0, uint32_t info1
 	/* Disable all interrupts */
 	__disable_irq();
 
-	dbg_printf("Fatal Error\n");
+	dbg_printf("FATAL ERROR\n");
 	dbg_printf("File:  %s\n", file);
 	dbg_printf("Line:  %ld\n", line);
 	dbg_printf("Info0: %08lx\n", info0);
@@ -57,7 +57,7 @@ void __attribute__((optimize("O0"))) fatal_error_trap(void *irq_stackf, uint32_t
 	/* Disable all interrupts */
 	__disable_irq();
 
-	dbg_printf("Fatal Error Trap\n");
+	dbg_printf("TRAP\n");
 	dbg_printf("Hdl:  %ld\n", hdl_nr);
 	dbg_printf("Sp:   0x%p\n", stackf_p);
 	dbg_printf("r0:   0x%08lx\n", stackf_p->r0);
