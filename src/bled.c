@@ -354,15 +354,17 @@ static int bled_hw_ctrl_cmd_flash(bled_led_t bled, bled_flash_cmd_arg_t* cmd_arg
 
 	bled_p->hw_tmr.ldma_buf[1] = _TIMER_CC_CTRL_RESETVALUE;
 
-	tmr_cnt_tick = TIMER_CounterGet(bled_p->hw_tmr.base);
-	bled_p->hw_tmr.ldma_buf[0] = tmr_cnt_tick
-		+ tmr_delay_ticks
-		+ tmr_flash_ticks;
-	TIMER_CompareSet(bled_p->hw_tmr.base, bled_p->hw_tmr.ch, tmr_cnt_tick
-		+ tmr_delay_ticks);
+	CORE_ATOMIC_SECTION(
+		tmr_cnt_tick = TIMER_CounterGet(bled_p->hw_tmr.base);
+		bled_p->hw_tmr.ldma_buf[0] = tmr_cnt_tick
+			+ tmr_delay_ticks
+			+ tmr_flash_ticks;
+		TIMER_CompareSet(bled_p->hw_tmr.base, bled_p->hw_tmr.ch, tmr_cnt_tick
+			+ tmr_delay_ticks);
 
-	TIMER_RouteCCSet(bled_p->hw_tmr.base, bled_p->hw_tmr.ch,
-		bled_p->hw_tmr.route);
+		TIMER_RouteCCSet(bled_p->hw_tmr.base, bled_p->hw_tmr.ch,
+			bled_p->hw_tmr.route);
+	)
 
 	return 0;
 }
