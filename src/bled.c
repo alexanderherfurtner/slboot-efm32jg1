@@ -333,6 +333,7 @@ static int bled_hw_ctrl_cmd_flash(bled_led_t bled, bled_flash_cmd_arg_t* cmd_arg
 		cmd_arg_p->delay_ms = 1; // add some pre-processing time
 
 	TIMER_RouteCCClr(bled_p->hw_tmr.base, bled_p->hw_tmr.ch);
+	LDMA_StopTransfer(bled_p->hw_ldma.ch);
 	GPIO_PinOutClear(bled_p->hw_gpio.port, bled_p->hw_gpio.pin);
 
 	tmr_clk_freq = TIMER_ClockFreqGet(bled_p->hw_tmr.base);
