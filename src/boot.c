@@ -69,9 +69,25 @@ void CRYOTIMER_IRQHandler	(void) { fatal_error_x(0x20); }
  */
 static const bled_init_param_t bled_init_param = {
 	.hwled = (bled_hwled_t[]) {
-        { .port = BOOT_LED1_PORT, .pin = BOOT_LED1_PIN },
-        { .port = BOOT_LED2_PORT, .pin = BOOT_LED2_PIN },
-    }
+		{
+			.gpio_port = BOOT_LED1_PORT,
+			.gpio_pin = BOOT_LED1_PIN,
+			.tmr_base = TIMER1,
+			.tmr_route = timerRouteCC_LOC28,
+			.tmr_ch = 0,
+			.ldma_base = LDMA,
+			.ldma_ch = 0
+		},
+		{
+			.gpio_port = BOOT_LED2_PORT,
+			.gpio_pin = BOOT_LED2_PIN,
+			.tmr_base = TIMER1,
+			.tmr_route = timerRouteCC_LOC28,
+			.tmr_ch = 1,
+			.ldma_base = LDMA,
+			.ldma_ch = 1
+		},
+	}
 };
 
 /******************************************************************************/
@@ -95,9 +111,10 @@ int main(void) {
 		WDOG_Feed();
 		loop--;
 		if (loop == 0) {
-			bled_ctrl(BLED_LED_BOOT, BLED_CMD_TOGGLE, NULL);
+			bled_ctrl_flash(BLED_LED_BOOT, 100);
 			loop = 1000000;
 		}
+
 	}
 
 	return 0;
