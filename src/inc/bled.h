@@ -55,7 +55,7 @@ typedef struct bled_init_param_s {
 
 /**
  * @brief Board LED initialization
- * 
+ *
  * @param param Initialization parameter
  * @return int 0 on success, -1 on error
  */
@@ -63,7 +63,7 @@ int bled_init(bled_init_param_t const * param);
 
 /**
  * @brief Board LED control
- * 
+ *
  * @param bled_p Pointer to the board LED
  * @param cmd Command to execute
  * @param cmd_arg_p Command argument
