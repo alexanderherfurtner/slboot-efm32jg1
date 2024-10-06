@@ -51,8 +51,10 @@ typedef struct bled_data_s {
 	struct hw_ldma_s {
 		LDMA_TypeDef * base;
 		uint32_t ch;
-		LDMA_TransferCfg_t xfer_cfg;
-		LDMA_Descriptor_t desc[2];
+		LDMA_TransferCfg_t cfg_flash;
+		LDMA_Descriptor_t desc_flash[2];
+		LDMA_TransferCfg_t cfg_blink;
+		LDMA_Descriptor_t desc_blink[2];
 	} hw_ldma;
 } bled_data_t;
 
@@ -204,12 +206,37 @@ static int bled_hw_tmr_deinit(bled_led_t bled) {
 static int bled_hw_ldma_init(bled_led_t bled, bled_init_param_t const * param) {
 	assert(bled < BLED_LED_CNT);
 	assert(param != NULL);
+	uint32_t ldma_ch_srcsel_tmr;
 
 	bled_data_t * bled_p = &bled_priv_data.led[bled];
 	bled_hwled_t const * hwled_p = &param->hwled[bled];
 
 	bled_p->hw_ldma.base = hwled_p->ldma_base;
 	bled_p->hw_ldma.ch = hwled_p->ldma_ch;
+
+	/* Pre-init ldma descriptors for the flash command */
+	bled_p->hw_ldma.desc_flash[0] = (LDMA_Descriptor_t)
+		LDMA_DESCRIPTOR_LINKREL_M2P_BYTE(&bled_p->hw_tmr.ldma_buf[0],
+		&bled_p->hw_tmr.base->CC[bled_p->hw_ldma.ch].CCV,
+		1, 1);
+	bled_p->hw_ldma.desc_flash[0].xfer.size = ldmaCtrlSizeWord;
+	bled_p->hw_ldma.desc_flash[0].xfer.doneIfs = 0;
+
+	bled_p->hw_ldma.desc_flash[1] = (LDMA_Descriptor_t)
+		LDMA_DESCRIPTOR_SINGLE_M2P_BYTE(&bled_p->hw_tmr.ldma_buf[1],
+		&bled_p->hw_tmr.base->CC[bled_p->hw_ldma.ch].CTRL,
+		1);
+	bled_p->hw_ldma.desc_flash[1].xfer.size = ldmaCtrlSizeWord;
+	bled_p->hw_ldma.desc_flash[1].xfer.doneIfs = 0;
+
+	if (bled_p->hw_tmr.base == TIMER0)
+		ldma_ch_srcsel_tmr = LDMA_CH_REQSEL_SOURCESEL_TIMER0;
+	else
+		ldma_ch_srcsel_tmr = LDMA_CH_REQSEL_SOURCESEL_TIMER1;
+
+	/* Init LDMA transfer */
+	bled_p->hw_ldma.cfg_flash = (LDMA_TransferCfg_t)
+		LDMA_TRANSFER_CFG_PERIPHERAL(ldma_ch_srcsel_tmr | (bled_p->hw_tmr.ch + 1));
 
 	return 0;
 }
@@ -315,33 +342,8 @@ static int bled_hw_ctrl_cmd_flash(bled_led_t bled, bled_flash_cmd_arg_t* cmd_arg
 	if (tmr_delay_ticks + tmr_flash_ticks > TIMER_MaxCount(bled_p->hw_tmr.base))
 		dbg_print("bled: warning: flash command ticks calculation overflow.\n");
 
-	/* Tmr CC compare control (buffer: ldma_buf[0]) */
-	bled_p->hw_ldma.desc[0] = (LDMA_Descriptor_t)
-		LDMA_DESCRIPTOR_LINKREL_M2P_BYTE(&bled_p->hw_tmr.ldma_buf[0],
-		&bled_p->hw_tmr.base->CC[bled_p->hw_ldma.ch].CCV,
-		1, 1);
-	bled_p->hw_ldma.desc[0].xfer.size = ldmaCtrlSizeWord;
-	bled_p->hw_ldma.desc[0].xfer.doneIfs = 0;
-
-	/* Tmr CC mode control (buffer: ldma_buf[1]) */
-	bled_p->hw_ldma.desc[1] = (LDMA_Descriptor_t)
-		LDMA_DESCRIPTOR_SINGLE_M2P_BYTE(&bled_p->hw_tmr.ldma_buf[1],
-		&bled_p->hw_tmr.base->CC[bled_p->hw_ldma.ch].CTRL,
-		1);
-	bled_p->hw_ldma.desc[1].xfer.size = ldmaCtrlSizeWord;
-	bled_p->hw_ldma.desc[1].xfer.doneIfs = 0;
-
-	uint32_t ldma_ch_srcsel_tmr = LDMA_CH_REQSEL_SOURCESEL_TIMER0;
-
-	if (bled_p->hw_tmr.base == TIMER1)
-		ldma_ch_srcsel_tmr = LDMA_CH_REQSEL_SOURCESEL_TIMER1;
-
-	/* Init LDMA transfer */
-	bled_p->hw_ldma.xfer_cfg = (LDMA_TransferCfg_t)
-		LDMA_TRANSFER_CFG_PERIPHERAL(ldma_ch_srcsel_tmr | (bled_p->hw_tmr.ch + 1));
-
-	LDMA_StartTransfer(bled_p->hw_ldma.ch, &bled_p->hw_ldma.xfer_cfg,
-		&bled_p->hw_ldma.desc[0]);
+	LDMA_StartTransfer(bled_p->hw_ldma.ch, &bled_p->hw_ldma.cfg_flash,
+		&bled_p->hw_ldma.desc_flash[0]);
 
 	bled_p->hw_tmr.ch_init = (TIMER_InitCC_TypeDef)TIMER_INITCC_DEFAULT;
 	bled_p->hw_tmr.ch_init.mode = timerCCModeCompare;
