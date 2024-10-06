@@ -201,7 +201,7 @@ static inline const hw_clk_peri_cfg_t* hw_clk_peri_config(void) {
 			.enable = true
 		},
 		{
-			.clk = cmuClock_TIMER1,
+			.clk = cmuClock_TIMER0,
 			.enable = true
 		},
 		{
@@ -597,7 +597,7 @@ static inline const hw_tmr_cfg_t* hw_tmr_config(void) {
 	static const hw_tmr_cfg_t config[] =
 	{
 		{
-			.timer = TIMER1,
+			.timer = TIMER0,
 			.init = {
 				.enable = true,
 				.debugRun = false,

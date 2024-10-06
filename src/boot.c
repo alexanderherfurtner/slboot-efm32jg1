@@ -72,7 +72,7 @@ static const bled_init_param_t bled_init_param = {
 		{
 			.gpio_port = BOOT_LED1_PORT,
 			.gpio_pin = BOOT_LED1_PIN,
-			.tmr_base = TIMER1,
+			.tmr_base = TIMER0,
 			.tmr_route = timerRouteCC_LOC28,
 			.tmr_ch = 0,
 			.ldma_base = LDMA,
@@ -81,7 +81,7 @@ static const bled_init_param_t bled_init_param = {
 		{
 			.gpio_port = BOOT_LED2_PORT,
 			.gpio_pin = BOOT_LED2_PIN,
-			.tmr_base = TIMER1,
+			.tmr_base = TIMER0,
 			.tmr_route = timerRouteCC_LOC28,
 			.tmr_ch = 1,
 			.ldma_base = LDMA,
