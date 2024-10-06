@@ -47,6 +47,14 @@ typedef struct bled_flash_cmd_arg_s {
 } bled_flash_cmd_arg_t;
 
 /**
+ * @brief Board LED blink command arguments
+ */
+typedef struct bled_blink_cmd_arg_s {
+	uint32_t blink_ms;
+	uint32_t blink_ratio;
+} bled_blink_cmd_arg_t;
+
+/**
  * @brief Board LED initialization parameter
  */
 typedef struct bled_init_param_s {
@@ -69,5 +77,66 @@ int bled_init(bled_init_param_t const * param);
  * @param cmd_arg_p Command argument
  */
 int bled_ctrl(bled_led_t bled, bled_cmd_t cmd, void * cmd_arg_p);
+
+/**
+ * @brief Board LED on
+ *
+ * @param bled Board LED
+ * @return int 0 on success, -1 on error
+ */
+static inline int bled_ctrl_on(bled_led_t bled) {
+	return bled_ctrl(bled, BLED_CMD_ON, NULL);
+}
+
+/**
+ * @brief Board LED off
+ *
+ * @param bled Board LED
+ * @return int 0 on success, -1 on error
+ */
+static inline int bled_ctrl_off(bled_led_t bled) {
+	return bled_ctrl(bled, BLED_CMD_OFF, NULL);
+}
+
+/**
+ * @brief Board LED toggle
+ *
+ * @param bled Board LED
+ * @return int 0 on success, -1 on error
+ */
+static inline int bled_ctrl_toggle(bled_led_t bled) {
+	return bled_ctrl(bled, BLED_CMD_TOGGLE, NULL);
+}
+
+/**
+ * @brief Board LED blink
+ *
+ * @param bled Board LED
+ * @param blink_ratio Blink ratio in percent
+ * @return int 0 on success, -1 on error
+ */
+static inline int bled_ctrl_flash(bled_led_t bled, uint32_t flash_ms) {
+	bled_flash_cmd_arg_t flash_args = {
+		.delay_ms = 0,
+		.flash_ms = flash_ms
+	};
+	return bled_ctrl(bled, BLED_CMD_FLASH, &flash_args);
+}
+
+/**
+ * @brief Board LED blink
+ *
+ * @param bled Board LED
+ * @param blink_ratio Blink ratio in percent
+ * @param blink_ms Blink period in milliseconds
+ * @return int 0 on success, -1 on error
+ */
+static inline int bled_ctrl_flash_dly(bled_led_t bled, uint32_t delay_ms, uint32_t flash_ms) {
+	bled_flash_cmd_arg_t flash_args = {
+		.delay_ms = delay_ms,
+		.flash_ms = flash_ms
+	};
+	return bled_ctrl(bled, BLED_CMD_FLASH, &flash_args);
+}
 
 #endif // BLED_H
