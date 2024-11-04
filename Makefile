@@ -3,9 +3,16 @@
 .SUFFIXES:
 .PHONY: all debug release clean
 
-# Set basic variables
+# Project
 PROJ := slboot
 DEVICE ?= EFM32JG1B200F128GM48
+
+# Runtime model
+XMODEL ?= RAM
+HEAP_SIZE ?= 0x0
+STACK_SIZE ?= 0x200
+
+# Toolchain
 CROSS_COMPILE ?= /opt/arm/gcc-arm-none-eabi/7.3-2018-q2/bin/arm-none-eabi-
 
 # Include a config.mk if it exists
@@ -52,23 +59,35 @@ OBJDUMP	:= $(CROSS_COMPILE)objdump
 
 DEPFLAGS = -MMD -MP -MF$(@:.o=.d) -MT$(@)
 
+ifeq ($(XMODEL),XIP)
+	LDSCRIPT ?= efm32jg1b200f128gm48-boot.ld
+	ARFLAGS_EXTRA = -D__STARTUP_CLEAR_RAM -D__STARTUP_CLEAR_BSS
+else ifeq ($(XMODEL),RAM)
+	LDSCRIPT ?= efm32jg1b200f128gm48-boot-ram.ld
+	ARFLAGS_EXTRA = -D__STARTUP_CLEAR_RAM_MUTIPLE -D__STARTUP_CLEAR_BSS_MULTIPLE \
+	-D__STARTUP_COPY_MULTIPLE
+else
+  $(error "Invalid XMODEL: $(XMODEL)")
+endif
+
 override ARFLAGS = \
-	-D__STACK_SIZE=0x400 -Wstack-usage=1024 -fstack-usage \
-	-x assembler-with-cpp -Wall -Wextra -mcpu=cortex-m3 \
-	-mthumb -DDEBUG_EFM_USER -D$(DEVICE) $(DEPFLAGS)
+	-mthumb -mcpu=cortex-m3 -mfix-cortex-m3-ldrd \
+	-Wall -Wextra -x assembler-with-cpp \
+	-D__STACK_SIZE=$(STACK_SIZE) -D__HEAP_SIZE=$(HEAP_SIZE) \
+	$(ARFLAGS_EXTRA) $(DEPFLAGS)
 
 override CFLAGS = \
 	-Wall -Wextra -mcpu=cortex-m3 -mthumb \
 	-mfix-cortex-m3-ldrd -ffunction-sections \
 	-fdata-sections -fomit-frame-pointer -std=c99 \
 	-fsigned-char -fmessage-length=0 \
-	-Wstack-usage=1024 -fstack-usage \
+	-Wstack-usage=$(STACK_SIZE) -fstack-usage \
 	-Wa,-ahld=$(OBJ_DIR)/$(@F:.o=.lst) \
 	-DDEBUG_EFM_USER -D$(DEVICE) $(DEPFLAGS)
 
 override LDFLAGS = \
 	-Xlinker -Map=$(EXE_DIR)/$(PROJ).map -mcpu=cortex-m3 \
-	-mthumb -Tarch/efm32jg1b/Source/GCC/efm32jg1b.ld \
+	-mthumb -Tarch/efm32jg1b/Source/GCC/$(LDSCRIPT) \
 	--specs=nano.specs --specs=nosys.specs  \
 	-Wl,--gc-sections 
 
