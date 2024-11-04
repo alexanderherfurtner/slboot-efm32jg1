@@ -144,9 +144,10 @@ vpath %.S $(S_PATHS)
 all:	debug
 
 debug:	CFLAGS += -DDEBUG -O0 -g
+debug:	ARFLAGS += -DDEBUG -g
 debug:	$(EXE_DIR)/$(PROJ).bin $(EXE_DIR)/$(PROJ).hex
 
-release:	CFLAGS += -O0 -g
+release:	CFLAGS += -Os
 release:	$(EXE_DIR)/$(PROJ).bin
 
 clean:
