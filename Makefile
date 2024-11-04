@@ -182,6 +182,7 @@ $(EXE_DIR)/$(PROJ).elf: $(EXE_DIR)/$(PROJ)
 	$(ECHO)$(CP) $< $@
 	$(ECHO)$(OBJDUMP) -h -S -C $@ >$(EXE_DIR)/$(PROJ).lst
 	$(ECHO)$(OBJSIZE) --format=berkeley $@ >$(EXE_DIR)/$(PROJ).size
+	cat $(EXE_DIR)/$(PROJ).size
 
 $(EXE_DIR)/$(PROJ).bin: $(EXE_DIR)/$(PROJ).elf
 	@echo "BIN $(shell basename $@)"
