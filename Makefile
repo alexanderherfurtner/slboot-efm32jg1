@@ -9,8 +9,8 @@ DEVICE ?= EFM32JG1B200F128GM48
 
 # Runtime model
 XMODEL ?= RAM
-HEAP_SIZE ?= 0x0
-STACK_SIZE ?= 0x200
+HEAP_SIZE ?= 0
+STACK_SIZE ?= 512
 
 # Toolchain
 CROSS_COMPILE ?= /opt/arm/gcc-arm-none-eabi/7.3-2018-q2/bin/arm-none-eabi-
