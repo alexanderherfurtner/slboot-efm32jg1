@@ -71,7 +71,7 @@ static inline char * sysinfo_chip_revision() {
  *
  * @return Chip temperature grade as a string.
  */
-static char * sysinfo_chip_tempgrade() {
+static inline char * sysinfo_chip_tempgrade() {
 	uint8_t temp_grade = (uint8_t)(DEVINFO->MEMINFO & _DEVINFO_MEMINFO_TEMPGRADE_MASK
 		>> _DEVINFO_MEMINFO_TEMPGRADE_SHIFT);
 
