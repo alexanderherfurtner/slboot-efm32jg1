@@ -16,6 +16,7 @@
 #include "dbgcfg.h"
 #include "bootcfg.h"
 #include "bledcfg.h"
+#include "sysinfocfg.h"
 
 #include "bled.h"
 #include "fatal.h"
@@ -210,14 +211,23 @@ static void sys_init(sys_info_t* sys_info) {
 }
 
 /**
- * @brief Retrieves system information.
+ * @brief Print system information.
  *
- * This function retrieves system information and stores it in the provided
- * `sys_info` structure.
- *
- * @param sys_info Pointer to the `sys_info_t` structure to store the system information.
+ * @param sys_info Pointer to the sys_info_t structure containing system
+ * information.
  */
 static void sys_info(sys_info_t* sys_info) {
-	/* print the reset cause */
+	/* Print bootloader signature */
+	dbg_printf("slboot efm32jgb1 vx.y:commit\n");
+	/* Print the reset cause */
 	dbg_print_reset_cause(sys_info->reset_cause);
+	/* Print the system information */
+	dbg_printf("Part: %s (Family: %s)\n", sysinfo_chip_id(),
+		sysinfo_chip_family());
+	dbg_printf("Revision: %s\n", sysinfo_chip_revision());
+	dbg_printf("Temp. Grade: %s\n", sysinfo_chip_tempgrade());
+	dbg_printf("MAC: %s\n", sysinfo_chip_mac());
+	dbg_printf("Serial No.: %s\n", sysinfo_chip_serialnr());
+	dbg_printf("Flash: %d kB\n", sysinfo_flash_size());
+	dbg_printf("SRAM: %d kB\n", sysinfo_chip_sram_size());
 }
