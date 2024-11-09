@@ -95,10 +95,7 @@ static const bled_init_param_t bled_init_param = {
 /**
  * @brief Entry point of the program.
  *
- * This function initializes the system and toggles the state of a GPIO pin in an infinite loop.
- * It also calls the `sys_info` function to display system information.
- *
- * @return 0 indicating successful program execution.
+ * @return 0; never returns
  */
 int main(void) {
 	uint32_t loop;
@@ -125,11 +122,9 @@ int main(void) {
 /**
  * @brief Initializes the system.
  *
- * This function configures various system components such as the chip, reset unit, watchdog,
- * power management, oscillators, clock selection, clock prescaler, peripheral clock, and LED1.
- * It also handles the erratum related to EMU_E210/216.
+ * This function configures various system components.
  *
- * @param sys_info Pointer to the sys_info_t structure to store system information.
+ * @param sys_info Pointer to the sys_info_t structure to store system info.
  */
 static void sys_init(sys_info_t* sys_info) {
 	/* Configure chip */
@@ -174,7 +169,8 @@ static void sys_init(sys_info_t* sys_info) {
 	/* Configure Ports */
 	for (hw_gpio_port_cfg_t const* hw_gpio_port_p = hw_gpio_port_config();
 		hw_gpio_port_p->port != (GPIO_Port_TypeDef)-1; hw_gpio_port_p++) {
-		GPIO_DriveStrengthSet(hw_gpio_port_p->port, hw_gpio_port_p->driveStrength);
+		GPIO_DriveStrengthSet(hw_gpio_port_p->port,
+			hw_gpio_port_p->driveStrength);
 		GPIO_SlewrateSet(hw_gpio_port_p->port,
 			hw_gpio_port_p->slewrate, hw_gpio_port_p->slewrateAlt);
 		GPIO_DinDisableSet(hw_gpio_port_p->port,
@@ -184,7 +180,8 @@ static void sys_init(sys_info_t* sys_info) {
 	/* Configure Pins */
 	for (hw_gpio_pin_cfg_t const* hw_gpio_pin_p = hw_gpio_pin_config();
 		hw_gpio_pin_p->port != (GPIO_Port_TypeDef)-1; hw_gpio_pin_p++) {
-		GPIO_PinModeSet(hw_gpio_pin_p->port, hw_gpio_pin_p->pin, hw_gpio_pin_p->mode, hw_gpio_pin_p->out);
+		GPIO_PinModeSet(hw_gpio_pin_p->port, hw_gpio_pin_p->pin,
+			hw_gpio_pin_p->mode, hw_gpio_pin_p->out);
 	}
 
 	/* Configure LDMA */
