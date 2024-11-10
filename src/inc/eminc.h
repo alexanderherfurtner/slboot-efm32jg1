@@ -35,6 +35,7 @@
 #include "em_rmu.h"     /* reset management unit */
 #include "em_emu.h"     /* energy management unit */
 #include "em_cmu.h"     /* clock management unit */
+#include "em_msc.h"     /* memory system controller */
 #include "em_wdog.h"    /* watchdog */
 #include "em_prs.h"     /* peripheral reflex system */
 #include "em_gpio.h"    /* general purpose input output unit */
