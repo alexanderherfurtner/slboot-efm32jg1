@@ -228,3 +228,12 @@ static void sys_info(sys_info_t* sys_info) {
 	dbg_printf("Flash: %d kB\n", sysinfo_flash_size());
 	dbg_printf("SRAM: %d kB\n", sysinfo_chip_sram_size());
 }
+
+/**
+ * @brief Reset the system via software.
+ */
+void sys_reset(void) {
+	dbg_printf("Resetting system...\n");
+	for (;;)
+		NVIC_SystemReset();
+}
