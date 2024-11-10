@@ -21,7 +21,7 @@
 				"address": "auto",
 				"decoders": [
 					{
-						"label": "",
+						"label": "RTT debug console",
 						"port": 0,
 						"type": "console"
 					}
