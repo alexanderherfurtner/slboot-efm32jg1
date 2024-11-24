@@ -97,6 +97,7 @@ INC_DIRS := \
 	-Isrc/inc \
 	-Isrc/cfg \
 	-Isrc/cfg/emdrv \
+	-Isrc/cfg/emdrv/ezradiodrv \
 	-Isrc/cfg/segger \
 	-Iarch/arm/Include \
 	-Iarch/efm32jg1b/Include \
@@ -108,6 +109,10 @@ INC_DIRS := \
 	-Idrivers/emdrv/tempdrv/inc \
 	-Idrivers/emdrv/ustimer/inc \
 	-Idrivers/emdrv/gpiointerrupt/inc \
+	-Idrivers/emdrv/ezradiodrv/common/inc \
+	-Idrivers/emdrv/ezradiodrv/common/inc/si4x6x \
+	-Idrivers/emdrv/ezradiodrv/plugins/inc \
+	-Idrivers/emdrv/ezradiodrv/si4461/inc
 
 C_SRC +=  \
 	src/boot.c \
@@ -130,6 +135,10 @@ C_SRC +=  \
 	drivers/emdrv/spidrv/src/spidrv.c \
 	drivers/emdrv/ustimer/src/ustimer.c \
 	drivers/emdrv/gpiointerrupt/src/gpiointerrupt.c \
+	drivers/emdrv/ezradiodrv/common/src/ezradio_hal.c \
+	drivers/emdrv/ezradiodrv/common/src/ezradio_comm.c \
+	drivers/emdrv/ezradiodrv/common/src/ezradio_api_lib.c \
+	drivers/emdrv/ezradiodrv/common/src/si4x6x/ezradio_api_lib_add.c \
 	arch/efm32jg1b/Source/system_efm32jg1b.c
 
 S_SRC +=  \
