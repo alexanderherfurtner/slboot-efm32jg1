@@ -104,6 +104,7 @@ INC_DIRS := \
 	-Idrivers/segger-rtt \
 	-Idrivers/emdrv/common/inc \
 	-Idrivers/emdrv/dmadrv/inc \
+	-Idrivers/emdrv/spidrv/inc \
 	-Idrivers/emdrv/tempdrv/inc \
 	-Idrivers/emdrv/ustimer/inc \
 	-Idrivers/emdrv/gpiointerrupt/inc \
@@ -118,6 +119,7 @@ C_SRC +=  \
 	libs/emlib/src/em_core.c \
 	libs/emlib/src/em_gpio.c \
 	libs/emlib/src/em_wdog.c \
+	libs/emlib/src/em_usart.c \
 	libs/emlib/src/em_system.c \
 	libs/emlib/src/em_assert.c \
 	libs/emlib/src/em_ldma.c \
@@ -125,6 +127,7 @@ C_SRC +=  \
 	drivers/segger-rtt/SEGGER_RTT.c \
 	drivers/segger-rtt/SEGGER_RTT_printf.c \
 	drivers/emdrv/dmadrv/src/dmadrv.c \
+	drivers/emdrv/spidrv/src/spidrv.c \
 	drivers/emdrv/ustimer/src/ustimer.c \
 	drivers/emdrv/gpiointerrupt/src/gpiointerrupt.c \
 	arch/efm32jg1b/Source/system_efm32jg1b.c
