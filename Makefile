@@ -117,6 +117,7 @@ INC_DIRS := \
 C_SRC +=  \
 	src/boot.c \
 	src/bled.c \
+	src/sirf.c \
 	src/fatal.c \
 	libs/emlib/src/em_cmu.c \
 	libs/emlib/src/em_rmu.c \
