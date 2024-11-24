@@ -102,8 +102,7 @@ INC_DIRS := \
 	-Iarch/efm32jg1b/Include \
 	-Ilibs/emlib/inc \
 	-Idrivers/segger-rtt \
-	-Idrivers/emdrv/common/inc \
-	-Idrivers/emdrv/tempdrv/inc \
+	-Idrivers/emdrv/common/inc
 
 C_SRC +=  \
 	src/boot.c \
