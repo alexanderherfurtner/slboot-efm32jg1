@@ -104,6 +104,7 @@ INC_DIRS := \
 	-Idrivers/segger-rtt \
 	-Idrivers/emdrv/common/inc \
 	-Idrivers/emdrv/tempdrv/inc \
+	-Idrivers/emdrv/gpiointerrupt/inc \
 
 C_SRC +=  \
 	src/boot.c \
@@ -121,6 +122,7 @@ C_SRC +=  \
 	libs/emlib/src/em_timer.c \
 	drivers/segger-rtt/SEGGER_RTT.c \
 	drivers/segger-rtt/SEGGER_RTT_printf.c \
+	drivers/emdrv/gpiointerrupt/src/gpiointerrupt.c \
 	arch/efm32jg1b/Source/system_efm32jg1b.c
 
 S_SRC +=  \
